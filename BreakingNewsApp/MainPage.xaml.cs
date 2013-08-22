@@ -54,6 +54,9 @@ namespace BreakingNewsApp
                 if (tags.Contains("sportsnews"))
                     sportsNews.IsOn = true;
             }
+
+            // Registrations expire, you should re-register with the hub, passing the tags on app launch.
+            // I haven't done it here but your should.
         }
 
         /// <summary>
