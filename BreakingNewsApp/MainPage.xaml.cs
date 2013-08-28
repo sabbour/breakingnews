@@ -37,7 +37,7 @@ namespace BreakingNewsApp
         /// </param>
         /// <param name="pageState">A dictionary of state preserved by this page during an earlier
         /// session.  This will be null the first time a page is visited.</param>
-        protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+        protected async override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
             // When the page is initially loaded, try to load preferences from the LocalSettings
             var tagsJoined = ApplicationData.Current.LocalSettings.Values["tags"] as string;
@@ -53,10 +53,12 @@ namespace BreakingNewsApp
                     techNews.IsOn = true;
                 if (tags.Contains("sportsnews"))
                     sportsNews.IsOn = true;
-            }
 
-            // Registrations expire, you should re-register with the hub, passing the tags on app launch.
-            // I haven't done it here but your should.
+                // Registrations expire, you should re-register with the hub, passing the tags on app launch
+                // Get the current push notification channel
+                var channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+                await App.Hub.RegisterNativeAsync(channel.Uri, tags);
+            }
         }
 
         /// <summary>
@@ -81,21 +83,21 @@ namespace BreakingNewsApp
 
             // Get selected tags. Not the best way but hey, it works for the demo!
             var tags = new List<string>();
-            if(worldNews.IsOn)
+            if (worldNews.IsOn)
                 tags.Add("worldnews");
             else tags.Remove("worldnews");
 
-            if(techNews.IsOn)
+            if (techNews.IsOn)
                 tags.Add("technews");
             else tags.Remove("technews");
 
-            if(sportsNews.IsOn)
+            if (sportsNews.IsOn)
                 tags.Add("sportsnews");
             else tags.Remove("sportsnews");
 
             // Important! You also need to store these preferences somewhere, either in LocalSettings or on your service, MobileService, etc.
             // For this demo, I'll store them in LocalSettings as a comma separated list
-            ApplicationData.Current.LocalSettings.Values["tags"] = string.Join(",",tags);
+            ApplicationData.Current.LocalSettings.Values["tags"] = string.Join(",", tags);
 
             // Register with the notification hub, and pass the tags you are interested in
             await App.Hub.RegisterNativeAsync(channel.Uri, tags);

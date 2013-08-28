@@ -27,7 +27,7 @@ namespace BreakingNewsBackend
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            // This call essentialy broadcasts a push notification to ALL devices that are registered with the service
+            // This call essentialy broadcasts a push notification to ALL Windows 8 devices that are registered with the service
             // and registered to that tag
             var payload = string.Format(toastTemplate, "Breaking World News!");
             hub.SendWindowsNativeNotificationAsync(payload,"worldnews");
@@ -35,7 +35,7 @@ namespace BreakingNewsBackend
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            // This call essentialy broadcasts a push notification to ALL devices that are registered with the service
+            // This call essentialy broadcasts a push notification to ALL Windows 8 devices that are registered with the service
             // and registered to that tag
             var payload = string.Format(toastTemplate, "Breaking Tech News!");
             hub.SendWindowsNativeNotificationAsync(payload, "technews");
@@ -43,7 +43,7 @@ namespace BreakingNewsBackend
 
         protected void Button3_Click(object sender, EventArgs e)
         {
-            // This call essentialy broadcasts a push notification to ALL devices that are registered with the service
+            // This call essentialy broadcasts a push notification to ALL Windows 8 devices that are registered with the service
             // and registered to that tag
             var payload = string.Format(toastTemplate, "Breaking Sports News!");
             hub.SendWindowsNativeNotificationAsync(payload, "sportsnews");
